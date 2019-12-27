@@ -27,3 +27,6 @@ main_menu_options()
 
 # def printManageClientsMenu():
 # print("bla bla ")
+# Import the necessary packages
+from consolemenu import *
+from consolemenu.items import *
