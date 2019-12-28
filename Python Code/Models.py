@@ -34,7 +34,7 @@ class Customer(BaseModel):
     clientAddress = CharField(max_length=255)
     dob = DateField()
     SSN = IntegerField(unique=True)
-    phoneNumber = IntegerField()
+    phoneNumber = CharField(max_length=255)
     email = CharField(max_length=255)
 
 
@@ -73,11 +73,11 @@ def find_customer(ssn):
 
 
 def insert_customer(client_name_param, client_address_param, dob_param, ssn_param, phone_number_param, email_param,
-                    account_no_param):
+                    account_no_param, account_type_param):
     existing_bank = Bank.get(Bank.number == bank_number)
     customer = Customer(bank=existing_bank, clientName=client_name_param, clientAddress=client_address_param,
                         dob=dob_param, SSN=ssn_param, phoneNumber=phone_number_param, email=email_param)
-    new_account = Account(client=customer, accountNo=account_no_param)
+    new_account = Account(client=customer, accountNo=account_no_param, accountType=account_type_param)
     customer.save()
     new_account.save()
 

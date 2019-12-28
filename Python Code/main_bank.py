@@ -31,11 +31,11 @@ def update_client():
 
     print("Existing Customer Current Name: " + founded_customer.clientName)
 
-    new_client_name = input("Please enter client's new name, otherwise hit 'Enter': ")
+    new_client_name = str(input("Please enter client's new name, otherwise hit 'Enter': "))
     if new_client_name:
         founded_customer.clientName = new_client_name
 
-    new_client_address = input("Please enter client's new address, otherwise hit 'Enter': ")
+    new_client_address = str(input("Please enter client's new address, otherwise hit 'Enter': "))
     if new_client_address:
         founded_customer.clientAddress = new_client_address
 
@@ -47,11 +47,11 @@ def update_client():
     if new_client_ssn:
         founded_customer.SSN = new_client_ssn
 
-    new_client_phone_no = input("Please enter client's new phone number, otherwise hit 'Enter': ")
+    new_client_phone_no = str(input("Please enter client's new phone number, otherwise hit 'Enter': "))
     if new_client_phone_no:
         founded_customer.phoneNumber = new_client_phone_no
 
-    new_client_email = input("Please enter client's new email, otherwise hit 'Enter': ")
+    new_client_email = str(input("Please enter client's new email, otherwise hit 'Enter': "))
     if new_client_email:
         founded_customer.email = new_client_email
 
@@ -71,16 +71,20 @@ def add_new_client():
     new_client_address = str(input("Please enter client's address, then hit 'Enter': "))
     new_client_dob = input("Please enter client's Date of Birth (YYYY-MM-DD), then hit 'Enter': ")
     new_client_ssn = input("Please enter client's SSN, then hit 'Enter': ")
-    new_client_phone_no = input("Please enter client's phone number, then hit 'Enter': ")
+    new_client_phone_no = str(input("Please enter client's phone number, then hit 'Enter': "))
     new_clients_email = str(input("Please enter client's email, then hit 'Enter': "))
     new_account_no = input("Please enter client's 10-digit account number, then hit 'Enter': ")
-    models.insert_customer(client_name_param=new_client_name, client_address_param=new_client_address,
-                           dob_param=new_client_dob, ssn_param=new_client_ssn, phone_number_param=new_client_phone_no,
-                           email_param=new_clients_email, account_no_param=new_account_no)
-    print("\nNew client " + new_client_name + " has been added. Please verify the following info: ")
-    print(tabulate([["Name ", new_client_name], ["Address ", new_client_address], ["Date of Birth ", new_client_dob],
-                    ["SSN ", new_client_ssn], ["Phone Number ", new_client_phone_no],
-                    ["Email ", new_clients_email], ["Account number ", new_account_no]], tablefmt="fancy_grid"))
+    new_account_type = str(input("Please enter type of account (Checking, Savings, Loan), then hit 'Enter': "))
+    if acct_type_validation(new_account_type):
+        models.insert_customer(client_name_param=new_client_name, client_address_param=new_client_address,
+                               dob_param=new_client_dob, ssn_param=new_client_ssn,
+                               phone_number_param=new_client_phone_no, email_param=new_clients_email,
+                               account_no_param=new_account_no, account_type_param=new_account_type)
+        print("\nNew client " + new_client_name + " has been added. Please verify the following info: ")
+        print(tabulate([["Name ", new_client_name], ["Address ", new_client_address], ["Date of Birth ", new_client_dob],
+                        ["SSN ", new_client_ssn], ["Phone Number ", new_client_phone_no],
+                        ["Email ", new_clients_email], ["Account number ", new_account_no], ["Type ", new_account_type]],
+                       tablefmt="fancy_grid"))
 
 
 def get_balance():
@@ -95,14 +99,18 @@ def open_new_account():
     existing_customer = models.find_customer(ssn)
     if existing_customer is not None:
         new_account_no = input("Please enter new 10-digit account number, then hit 'Enter': ")
-        new_account_type = input("Please enter type of account (Checking, Savings, Loan), then hit 'Enter': ")
+        new_account_type = str(input("Please enter type of account (Checking, Savings, Loan), then hit 'Enter': "))
+        if acct_type_validation(new_account_type):
+            models.open_new_account(existing_customer, account_no_param=new_account_no,
+                                    account_type_param=new_account_type)
+            print("\nNew account number " + new_account_no + " has been added to client's profile")
 
-        if new_account_type not in AccountType.__members__:
-            print("Invalid entry. Please enter valid account type")
-            return
 
-        models.open_new_account(existing_customer, account_no_param=new_account_no, account_type_param=new_account_type)
-        print("\nNew account number " + new_account_no + " has been added to client's profile")
+def acct_type_validation(new_account_type):
+    if new_account_type in AccountType._value2member_map_:
+        return True
+    print("Invalid entry. Please enter valid account type")
+    return False
 
 
 def close_account():
@@ -112,11 +120,9 @@ def close_account():
 
 def add_new_transaction():
     account_no = input("Please enter client's 10-digit account number, then hit 'Enter': ")
-
     existing_account = models.get_account(account_no)
-    if existing_account is not None:
+    if existing_account is None:
         return
-
     transaction_type = str(input("Please enter type of transaction (Deposit, Withdrawal, Interest, Payment): "))
     transaction_amount = input("Please enter transaction amount ('+' or '-'): ")
     models.add_new_transaction(account_no_param=account_no, transaction_type_param=transaction_type,
