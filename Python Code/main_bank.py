@@ -86,7 +86,7 @@ def add_new_client():
 def get_balance():
     account_no = input("Please enter client's 10-digit account number, then hit 'Enter': ")
     existing_acct_balance = models.check_balance(account_no)
-    if existing_acct_balance is None:
+    if existing_acct_balance is not None:
         print("\nAccount balance: $" + str(existing_acct_balance))
 
 
@@ -101,7 +101,7 @@ def open_new_account():
             print("Invalid entry. Please enter valid account type")
             return
 
-        models.open_new_account(existing_customer, account_no_param=new_account_no)
+        models.open_new_account(existing_customer, account_no_param=new_account_no, account_type_param=new_account_type)
         print("\nNew account number " + new_account_no + " has been added to client's profile")
 
 

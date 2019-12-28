@@ -12,6 +12,7 @@ mysql_db = MySQLDatabase(
     password='root',  # password
     host='localhost'  # hostname -> localhost or 127.0.0.1
 )
+#mysql_db.default_values_insert()
 
 
 class BaseModel(Model):
@@ -20,14 +21,14 @@ class BaseModel(Model):
 
 
 class Bank(BaseModel):
-    id = PrimaryKeyField(null=False)
+    Id = PrimaryKeyField(null=False)
     name = CharField(max_length=255)
     address = CharField(max_length=255)
     number = IntegerField()
 
 
 class Customer(BaseModel):
-    id = PrimaryKeyField(null=False)
+    Id = PrimaryKeyField(null=False)
     bank = ForeignKeyField(Bank, related_name='bank_id')
     clientName = CharField(max_length=255)
     clientAddress = CharField(max_length=255)
@@ -41,6 +42,7 @@ class Account(BaseModel):
     Id = PrimaryKeyField(null=False)
     client = ForeignKeyField(Customer, related_name='client_id')
     accountNo = IntegerField(unique=True)
+    accountType = CharField(max_length=255)
     balance = FloatField(default=0.00)
 
 
@@ -56,8 +58,9 @@ mysql_db.create_tables([Bank, Customer, Account, Transactions])
 
 
 def create_lenas_bank():
-    row = Bank(name=bank_name, address=bank_address, number=bank_number)
-    row.save()
+    bank = Bank.get_or_none(number=bank_number)
+    if bank is None:
+        Bank.create(name=bank_name, address=bank_address, number=bank_number)
 
 
 def find_customer(ssn):
@@ -90,8 +93,9 @@ def delete_customer(customer_to_remove):
 # To get a list of names of all Bank customers
 def list_of_bank_clients():
     client_query = Customer.select()
+    print("List of bank clients:\n")
     for client in client_query:
-        print(tabulate([[client.clientName]], ["Name"], tablefmt="fancy_grid"))
+        print(client.clientName)
 
 
 def add_new_transaction(account_no_param, transaction_type_param, transaction_amount_param):
@@ -124,8 +128,8 @@ def show_transactions(account_no):
                        tablefmt="fancy_grid"))
 
 
-def open_new_account(existing_customer, account_no_param):
-    new_account = Account(client=existing_customer, accountNo=account_no_param)
+def open_new_account(existing_customer, account_no_param, account_type_param):
+    new_account = Account(client=existing_customer, accountNo=account_no_param, accountType=account_type_param)
     new_account.save()
 
 
