@@ -2,6 +2,10 @@ from peewee import *
 from datetime import date
 from tabulate import tabulate
 
+bank_name = "Lena's Bank"
+bank_address = "555 5th Ave, NY NY 10025"
+bank_number = 2125551155
+
 mysql_db = MySQLDatabase(
     'pet_project',  # database name
     user='root',  # user name
@@ -15,7 +19,6 @@ class BaseModel(Model):
         database = mysql_db
 
 
-# Define table
 class Bank(BaseModel):
     id = PrimaryKeyField(null=False)
     name = CharField(max_length=255)
@@ -52,141 +55,91 @@ class Transactions(BaseModel):
 mysql_db.create_tables([Bank, Customer, Account, Transactions])
 
 
-def findCustomer(SSN):
-    try:
-        searchBySsn = Customer.get(Customer.SSN == SSN)
-    except Customer.DoesNotExist:
-        searchBySsn = None
-    return searchBySsn
-
-
-# print(findCustomer(111451122))
-
-
-def insertCustomer(clientNameParam, clientAddressParam, dobParam, SSNParam, phoneNumberParam, emailParam,
-                   accountNoParam):
-    existingBank = Bank.get(Bank.name == "Lena's Bank")
-    customer = Customer(bank=existingBank, clientName=clientNameParam, clientAddress=clientAddressParam,
-                        dob=dobParam, SSN=SSNParam, phoneNumber=phoneNumberParam, email=emailParam)
-    new_account = Account(client=customer, accountNo=accountNoParam)
-    customer.save()
-    new_account.save()
-
-
-def updateCustomer(clientNameParam, clientAddressParam, dobParam, SSNParam, phoneNumberParam, emailParam,
-                   accountNoParam):
-    existingBank = Bank.get(Bank.name == "Lena's Bank")
-    customer = Customer(bank=existingBank, clientName=clientNameParam, clientAddress=clientAddressParam,
-                        dob=dobParam, SSN=SSNParam, phoneNumber=phoneNumberParam, email=emailParam)
-    new_account = Account(client=customer, accountNo=accountNoParam)
-    customer.save()
-    new_account.save()
-
-
-def updateCustomerInfo(updatedCustomer):
-    updatedCustomer.save()
-
-
-def deleteCustomer(SSNParam):
-    remove_q = Customer.get(Customer.SSN == SSNParam)
-    remove_q.delete_instance(recursive=True)
-
-
-# deleteCustomer(222451122)
-
-# remove_q = Customer.delete().where(Customer.SSN == SSNParam)
-# remove_q.execute()
-
-# To get a list of names of all Bank customers
-def listofBankClients():
-    clientquery = Customer.select()
-    for client in clientquery:
-        print(tabulate([[client.clientName]], ["Name"], tablefmt="fancy_grid"))
-        # print(client.clientName)
-
-
-# listofBankClients()
-
-
-def insertIntoDb():
-    row = Bank(name="Lena's Bank", address="555 5th Ave, NY NY 10025", number=2125551155)
+def create_lenas_bank():
+    row = Bank(name=bank_name, address=bank_address, number=bank_number)
     row.save()
 
 
-def addNewTransaction(accountNo, transactionTypeParam, transactionAmountParam):
-    account1 = Account.get(Account.accountNo == accountNo)
-    newTrans = Transactions(transactionType=transactionTypeParam,
-                            transactionAmount=transactionAmountParam,
-                            accountDetails=account1)
-    account1.balance = account1.balance + float(transactionAmountParam)
-    account1.save()
-    newTrans.save()
-
-
-def checkBalance(accountNo):
+def find_customer(ssn):
     try:
-        account1 = Account.get(Account.accountNo == accountNo)
-    except Account.DoesNotExist:
-        print("\nAccount not found")
-        return
-    return account1.balance
+        customer_by_ssn = Customer.get(Customer.SSN == ssn)
+    except Customer.DoesNotExist:
+        print("Client Not Found")
+        return None
+    return customer_by_ssn
 
 
-# checkBalance(1000002311)
+def insert_customer(client_name_param, client_address_param, dob_param, ssn_param, phone_number_param, email_param,
+                    account_no_param):
+    existing_bank = Bank.get(Bank.number == bank_number)
+    customer = Customer(bank=existing_bank, clientName=client_name_param, clientAddress=client_address_param,
+                        dob=dob_param, SSN=ssn_param, phoneNumber=phone_number_param, email=email_param)
+    new_account = Account(client=customer, accountNo=account_no_param)
+    customer.save()
+    new_account.save()
 
 
-# query = Transactions.select(
-# Transactions.transactionAmount,
-# fn.SUM(Transactions.transactionAmount).alias('total')). \
-# where(Transactions.accountDetails == account1)
-# return query[0].total
+def update_customer_info(customer_to_update):
+    customer_to_update.save()
 
 
-def ShowTransactions(accountNo):
-    account1 = Account.get(Account.accountNo == accountNo)
-    tran_query = Transactions.select().where(Transactions.accountDetails == account1)
+def delete_customer(customer_to_remove):
+    customer_to_remove.delete_instance(recursive=True)
+
+
+# To get a list of names of all Bank customers
+def list_of_bank_clients():
+    client_query = Customer.select()
+    for client in client_query:
+        print(tabulate([[client.clientName]], ["Name"], tablefmt="fancy_grid"))
+
+
+def add_new_transaction(account_no_param, transaction_type_param, transaction_amount_param):
+    existing_account = get_account(account_no_param)
+    if existing_account is not None:
+        new_trans = Transactions(transactionType=transaction_type_param,
+                                 transactionAmount=transaction_amount_param,
+                                 accountDetails=existing_account)
+        existing_account.balance = existing_account.balance + float(transaction_amount_param)
+        existing_account.save()
+        new_trans.save()
+
+
+def check_balance(account_no):
+    existing_account = get_account(account_no)
+    if existing_account is None:
+        return None
+    return existing_account.balance
+
+
+def show_transactions(account_no):
+    find_account = Account.get(Account.accountNo == account_no)
+    transactions_query = Transactions.select().where(Transactions.accountDetails == find_account)
 
     # to print all transactions for given acct. number
-    for transaction in tran_query:
+    for transaction in transactions_query:
         print(tabulate([["Transaction Id ", transaction.Id], ["Transaction Date ", transaction.transactionDate],
                         ["Transaction Type ", transaction.transactionType],
                         ["Transaction Amount ", transaction.transactionAmount]],
                        tablefmt="fancy_grid"))
 
 
-# ShowTransactions(1000002311)
-
-def openNewAccount(SSN, accountNoParam):
-    customer = findCustomer(SSN)
-    new_account = Account(client=customer, accountNo=accountNoParam)
+def open_new_account(existing_customer, account_no_param):
+    new_account = Account(client=existing_customer, accountNo=account_no_param)
     new_account.save()
 
 
-# openNewAccount()
-
-def closeExistingAccount(accountNumParam):
+def get_account(account_num_param):
     try:
-        removeacct = Account.get(Account.accountNo == accountNumParam)
-        removeacct.delete_instance(recursive=True)
+        existing_account = Account.get(Account.accountNo == account_num_param)
     except Account.DoesNotExist:
         print("\nAccount not found")
-        return
-    print("\nAccount number " + accountNumParam + " has been removed")
-
-# closeExistingAccount(1122334499)
-
-# print(checkBalance(1000002322))
+        return None
+    return existing_account
 
 
-# insertIntoDb()
-# insertCustomer(clientNameParam = "John Snow", clientAddressParam = "The Wall", dobParam = 1980-01-22,
-# SSNParam = 999007676, phoneNumberParam = 2129990077, emailParam = "j.snow1@yahoo.com",
-# accountNoParam = 1000004413)
-# addNewTransaction(1000002311,"Deposit",100.00)
-# addNewTransaction(1000002322,"Deposit", 10.50)
-
-#### to do ####
-# 1. Create search for client in "generalClientInfo" by client's name OR SSN - N/A
-# 2. "on delete" cascade for each Foreign Key
-# 3. One-liner for func listofBankClients() #print(client.clientName for client in clientquery)
-# 4. Account types (Checking, SV, Loan)
+def close_existing_account(account_num_param):
+    account_to_remove = get_account(account_num_param)
+    if account_to_remove is not None:
+        account_to_remove.delete_instance(recursive=True)
+        print("\nAccount number " + account_num_param + " has been removed")
