@@ -12,7 +12,6 @@ mysql_db = MySQLDatabase(
     password='root',  # password
     host='localhost'  # hostname -> localhost or 127.0.0.1
 )
-#mysql_db.default_values_insert()
 
 
 class BaseModel(Model):
@@ -30,28 +29,28 @@ class Bank(BaseModel):
 class Customer(BaseModel):
     Id = PrimaryKeyField(null=False)
     bank = ForeignKeyField(Bank, related_name='bank_id')
-    clientName = CharField(max_length=255)
-    clientAddress = CharField(max_length=255)
+    name = CharField(max_length=255)
+    address = CharField(max_length=255)
     dob = DateField()
-    SSN = IntegerField(unique=True)
-    phoneNumber = CharField(max_length=255)
+    ssn = IntegerField(unique=True)
+    phone_number = CharField(max_length=255)
     email = CharField(max_length=255)
 
 
 class Account(BaseModel):
     Id = PrimaryKeyField(null=False)
-    client = ForeignKeyField(Customer, related_name='client_id')
-    accountNo = IntegerField(unique=True)
-    accountType = CharField(max_length=255)
+    customer = ForeignKeyField(Customer, related_name='customer_id')
+    number = IntegerField(unique=True)
+    type = CharField(max_length=255)
     balance = FloatField(default=0.00)
 
 
 class Transactions(BaseModel):
     Id = PrimaryKeyField(null=False)
-    accountDetails = ForeignKeyField(Account, related_name='account_id')
-    transactionDate = DateField(default=str(date.today()))
-    transactionType = CharField(max_length=255)
-    transactionAmount = FloatField()
+    account_details = ForeignKeyField(Account, related_name='account_id')
+    date = DateField(default=str(date.today()))
+    type = CharField(max_length=255)
+    amount = FloatField()
 
 
 mysql_db.create_tables([Bank, Customer, Account, Transactions])
@@ -65,19 +64,19 @@ def create_lenas_bank():
 
 def find_customer(ssn):
     try:
-        customer_by_ssn = Customer.get(Customer.SSN == ssn)
+        customer_by_ssn = Customer.get(Customer.ssn == ssn)
     except Customer.DoesNotExist:
-        print("Client Not Found")
+        print("Customer Not Found")
         return None
     return customer_by_ssn
 
 
-def insert_customer(client_name_param, client_address_param, dob_param, ssn_param, phone_number_param, email_param,
+def insert_customer(name_param, address_param, dob_param, ssn_param, phone_number_param, email_param,
                     account_no_param, account_type_param):
     existing_bank = Bank.get(Bank.number == bank_number)
-    customer = Customer(bank=existing_bank, clientName=client_name_param, clientAddress=client_address_param,
-                        dob=dob_param, SSN=ssn_param, phoneNumber=phone_number_param, email=email_param)
-    new_account = Account(client=customer, accountNo=account_no_param, accountType=account_type_param)
+    customer = Customer(bank=existing_bank, name=name_param, address=address_param,
+                        dob=dob_param, ssn=ssn_param, phoneNumber=phone_number_param, email=email_param)
+    new_account = Account(customer=customer, accountNo=account_no_param, accountType=account_type_param)
     customer.save()
     new_account.save()
 
@@ -91,11 +90,11 @@ def delete_customer(customer_to_remove):
 
 
 # To get a list of names of all Bank customers
-def list_of_bank_clients():
-    client_query = Customer.select()
-    print("List of bank clients:\n")
-    for client in client_query:
-        print(client.clientName)
+def list_of_bank_customers():
+    customer_query = Customer.select()
+    print("List of bank customers:\n")
+    for customer in customer_query:
+        print(customer.name)
 
 
 def add_new_transaction(account_no_param, transaction_type_param, transaction_amount_param):
@@ -129,7 +128,7 @@ def show_transactions(account_no):
 
 
 def open_new_account(existing_customer, account_no_param, account_type_param):
-    new_account = Account(client=existing_customer, accountNo=account_no_param, accountType=account_type_param)
+    new_account = Account(customer=existing_customer, accountNo=account_no_param, accountType=account_type_param)
     new_account.save()
 
 
@@ -147,8 +146,3 @@ def close_existing_account(account_num_param):
     if account_to_remove is not None:
         account_to_remove.delete_instance(recursive=True)
         print("\nAccount number " + account_num_param + " has been removed")
-
-
-### to do ###
-# class Customer - update 'clientName', 'clientAddress' and 'SSN' columns. Also in every function!
-# Replace each 'client' to 'customer'
