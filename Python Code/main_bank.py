@@ -145,7 +145,7 @@ def main():
 
     # A FunctionItem runs a Python function when selected
     list_of_all_clients_function = FunctionItem("List of all clients", list_of_all_clients)
-    find_customer_function = FunctionItem("Find customer by SSN", find_customer)
+    find_customer_function = FunctionItem("Find client by SSN", find_customer)
     update_client_info_function = FunctionItem("Update client info", update_client)
     remove_client_function = FunctionItem("Remove client", remove_client)
     add_new_client_function = FunctionItem("Add new client", add_new_client)

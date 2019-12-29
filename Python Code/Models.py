@@ -147,3 +147,8 @@ def close_existing_account(account_num_param):
     if account_to_remove is not None:
         account_to_remove.delete_instance(recursive=True)
         print("\nAccount number " + account_num_param + " has been removed")
+
+
+### to do ###
+# class Customer - update 'clientName', 'clientAddress' and 'SSN' columns. Also in every function!
+# Replace each 'client' to 'customer'
