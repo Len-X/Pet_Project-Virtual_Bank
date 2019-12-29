@@ -128,9 +128,9 @@ def add_new_transaction():
     transaction_amount = input("Please enter transaction amount ('+' or '-'): ")
     models.add_new_transaction(account_no_param=account_no, transaction_type_param=transaction_type,
                                transaction_amount_param=transaction_amount)
-    print("\n" + transaction_type + " transaction for $" + transaction_amount +
+    print("\n" + transaction_type + " transaction for $" + str(transaction_amount) +
           " has been added. Please verify transaction details below: ")
-    print(tabulate([["Account Number ", account_no], ["Type ", transaction_type], ["Amount ", str(transaction_amount)]],
+    print(tabulate([["Account Number ", account_no], ["Type ", transaction_type], ["Amount ", transaction_amount]],
                    tablefmt="fancy_grid"))
 
 
