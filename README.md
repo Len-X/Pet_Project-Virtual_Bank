@@ -1,6 +1,7 @@
 # Pet_Project-Virtual_Bank
 
-###sonarcloud
+### sonarcloud
+
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=LenXdata_Pet_Project-Virtual_Bank&metric=alert_status)](https://sonarcloud.io/dashboard?id=LenXdata_Pet_Project-Virtual_Bank)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=LenXdata_Pet_Project-Virtual_Bank&metric=bugs)](https://sonarcloud.io/dashboard?id=LenXdata_Pet_Project-Virtual_Bank)
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=LenXdata_Pet_Project-Virtual_Bank&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=LenXdata_Pet_Project-Virtual_Bank)
