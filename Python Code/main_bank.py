@@ -15,7 +15,7 @@ def find_customer():
     existing_customer = models.find_customer(ssn)
     if existing_customer is not None:
         print("\nInfo for client " + existing_customer.clientName + " is below: ")
-        print(tabulate([["Client's Id ", existing_customer.id], ["Client's name ", existing_customer.clientName],
+        print(tabulate([["Client's Id ", existing_customer.Id], ["Client's name ", existing_customer.clientName],
                         ["Client's Address ", existing_customer.clientAddress],
                         ["Client's Date of Birth ", existing_customer.dob],
                         ["Client's SSN ", existing_customer.SSN],
@@ -25,37 +25,38 @@ def find_customer():
 
 def update_client():
     ssn = input("Please enter client's SSN: ")
-    founded_customer = models.find_customer(ssn)
-    if founded_customer is None:
+    existing_customer = models.find_customer(ssn)
+    if existing_customer is None:
         return
 
-    print("Existing Customer Current Name: " + founded_customer.clientName)
+    print("Existing Customer Current Name: " + existing_customer.clientName)
 
     new_client_name = str(input("Please enter client's new name, otherwise hit 'Enter': "))
     if new_client_name:
-        founded_customer.clientName = new_client_name
+        existing_customer.clientName = new_client_name
 
     new_client_address = str(input("Please enter client's new address, otherwise hit 'Enter': "))
     if new_client_address:
-        founded_customer.clientAddress = new_client_address
+        existing_customer.clientAddress = new_client_address
 
     new_client_dob = input("Please enter client's new Date of Birth (YYYY-MM-DD), otherwise hit 'Enter': ")
     if new_client_dob:
-        founded_customer.dob = new_client_dob
+        existing_customer.dob = new_client_dob
 
     new_client_ssn = input("Please enter client's new SSN, otherwise hit 'Enter': ")
     if new_client_ssn:
-        founded_customer.SSN = new_client_ssn
+        existing_customer.SSN = new_client_ssn
 
     new_client_phone_no = str(input("Please enter client's new phone number, otherwise hit 'Enter': "))
     if new_client_phone_no:
-        founded_customer.phoneNumber = new_client_phone_no
+        existing_customer.phoneNumber = new_client_phone_no
 
     new_client_email = str(input("Please enter client's new email, otherwise hit 'Enter': "))
     if new_client_email:
-        founded_customer.email = new_client_email
+        existing_customer.email = new_client_email
 
-    models.update_customer_info(founded_customer)
+    models.update_customer_info(existing_customer)
+    print("\nClient's profile has been updated")
 
 
 def remove_client():
@@ -103,7 +104,7 @@ def open_new_account():
         if acct_type_validation(new_account_type):
             models.open_new_account(existing_customer, account_no_param=new_account_no,
                                     account_type_param=new_account_type)
-            print("\nNew account number " + new_account_no + " has been added to client's profile")
+            print("\nNew account number " + str(new_account_no) + " has been added to client's profile")
 
 
 def acct_type_validation(new_account_type):
@@ -129,7 +130,7 @@ def add_new_transaction():
                                transaction_amount_param=transaction_amount)
     print("\n" + transaction_type + " transaction for $" + transaction_amount +
           " has been added. Please verify transaction details below: ")
-    print(tabulate([["Account Number ", account_no], ["Type ", transaction_type], ["Amount ", transaction_amount]],
+    print(tabulate([["Account Number ", account_no], ["Type ", transaction_type], ["Amount ", str(transaction_amount)]],
                    tablefmt="fancy_grid"))
 
 
@@ -160,8 +161,8 @@ def main():
     list_of_all_clients_submenu_item.append_item(list_of_all_clients_function)
     list_of_all_clients_submenu_item.append_item(find_customer_function)
     list_of_all_clients_submenu_item.append_item(update_client_info_function)
-    list_of_all_clients_submenu_item.append_item(remove_client_function)
     list_of_all_clients_submenu_item.append_item(add_new_client_function)
+    list_of_all_clients_submenu_item.append_item(remove_client_function)
 
     work_with_accounts_selection_menu = SelectionMenu([])
     work_with_accounts_selection_menu.append_item(get_balance_function)
