@@ -2,12 +2,13 @@ from unittest.mock import patch, Mock
 import io
 
 import sys
-import tabulate
+from tabulate import tabulate
 from unittest import TestCase
 
 sys.modules['models'] = Mock()
-from src import main_bank as mb
 from src.models import Customer, Account
+import src.main_bank as mb
+
 
 
 def get_customer():
