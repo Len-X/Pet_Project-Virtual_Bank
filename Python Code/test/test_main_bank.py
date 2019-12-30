@@ -6,8 +6,8 @@ from tabulate import tabulate
 from unittest import TestCase
 
 sys.modules['models'] = Mock()
-import main_bank as mb
-from models import Customer, Account
+from src import main_bank as mb
+from src.models import Customer, Account
 
 
 def get_customer():

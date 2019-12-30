@@ -2,7 +2,7 @@ from enum import Enum
 
 from consolemenu import *
 from consolemenu.items import *
-import models as models
+from src import models as models
 from tabulate import tabulate
 
 
