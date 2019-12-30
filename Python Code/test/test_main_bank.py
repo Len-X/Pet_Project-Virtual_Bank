@@ -2,7 +2,7 @@ from unittest.mock import patch, Mock
 import io
 
 import sys
-from tabulate import tabulate
+import tabulate
 from unittest import TestCase
 
 sys.modules['models'] = Mock()
