@@ -26,7 +26,7 @@ jobs: # A basic unit of work in a run
       - run:
           command: |
             export PYTHONPATH="$PWD"
-            pipenv run python test/test_bank.py test
+            pipenv python -m unittest test/test_bank.py
             pipenv coverage run -m pytest
             pipenv coverage report
             pipenv coverage html
