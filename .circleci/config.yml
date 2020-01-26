@@ -27,14 +27,12 @@ jobs: # A basic unit of work in a run
           command: |
             export PYTHONPATH="$PWD"
             pipenv run python test/test_bank.py test
-      - coverage tests:
-          command: |
             coverage run -m pytest
             coverage report
             coverage html
 
       - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
-          path: ~/Pet_Project-Virtual_Bank
+          path: ~/Pet_Project-Virtual_Bank/htmlcov/index.html
       - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           path: ~/Pet_Project-Virtual_Bank
           destination: tr1
