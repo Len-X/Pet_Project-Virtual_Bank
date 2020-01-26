@@ -3,6 +3,9 @@
 ### Travis-CI:
 [![Build Status](https://travis-ci.com/LenXdata/Pet_Project-Virtual_Bank.svg?branch=master)](https://travis-ci.com/LenXdata/Pet_Project-Virtual_Bank)
 
+### CircleCI
+[![CircleCI](https://circleci.com/gh/LenXdata/Pet_Project-Virtual_Bank.svg?style=svg)](https://circleci.com/gh/LenXdata/Pet_Project-Virtual_Bank)
+
 ### Sonarcloud:
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=LenXdata_Pet_Project-Virtual_Bank&metric=alert_status)](https://sonarcloud.io/dashboard?id=LenXdata_Pet_Project-Virtual_Bank)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=LenXdata_Pet_Project-Virtual_Bank&metric=bugs)](https://sonarcloud.io/dashboard?id=LenXdata_Pet_Project-Virtual_Bank)
