@@ -1,5 +1,6 @@
-from peewee import *
 from datetime import date
+from peewee import MySQLDatabase, Model, PrimaryKeyField, CharField, IntegerField, ForeignKeyField, DateField, \
+    FloatField
 from tabulate import tabulate
 
 bank_name = "Lena's Bank"
@@ -10,9 +11,9 @@ mysql_db = MySQLDatabase(
     'pet_project',  # database name
     user='root',  # user name
     password='root',  # password
+    port=3306,
     host='localhost'  # hostname -> localhost or 127.0.0.1
 )
-
 
 class BaseModel(Model):
     class Meta:

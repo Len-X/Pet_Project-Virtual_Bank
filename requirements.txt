@@ -1,0 +1,5 @@
+tabulate==0.8.6
+console-menu==0.6.0
+peewee==3.11.2
+pymysql==0.9.3
+PyMySQL[rsa]
