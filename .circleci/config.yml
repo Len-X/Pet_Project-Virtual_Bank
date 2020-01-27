@@ -29,10 +29,10 @@ jobs: # A basic unit of work in a run
             pipenv run python -m unittest test/test_bank.py
             pipenv run coverage run -m unittest discover
             pipenv run coverage report
-            pipenv run coverage xml
+            pipenv run coverage html
 
       - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
-          path: ~/Pet_Project-Virtual_Bank/coverage.xml
+          path: ~/Pet_Project-Virtual_Bank/htmlcov
       - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
-          path: ~/Pet_Project-Virtual_Bank/coverage.xml
+          path: ~/Pet_Project-Virtual_Bank/htmlcov
           destination: tests-result
