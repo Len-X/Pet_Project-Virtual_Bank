@@ -76,8 +76,8 @@ def insert_customer(name_param, address_param, dob_param, ssn_param, phone_numbe
                     account_no_param, account_type_param):
     existing_bank = Bank.get(Bank.number == bank_number)
     customer = Customer(bank=existing_bank, name=name_param, address=address_param,
-                        dob=dob_param, ssn=ssn_param, phoneNumber=phone_number_param, email=email_param)
-    new_account = Account(customer=customer, accountNo=account_no_param, accountType=account_type_param)
+                        dob=dob_param, ssn=ssn_param, phone_number=phone_number_param, email=email_param)
+    new_account = Account(customer=customer, number=account_no_param, type=account_type_param)
     customer.save()
     new_account.save()
 

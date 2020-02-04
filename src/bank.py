@@ -46,7 +46,7 @@ def update_customer():
 
     new_customer_phone_no = str(input("Please enter customer's new phone number, otherwise hit 'Enter': "))
     if new_customer_phone_no:
-        existing_customer.phoneNumber = new_customer_phone_no
+        existing_customer.phone_number = new_customer_phone_no
 
     new_customer_email = str(input("Please enter customer's new email, otherwise hit 'Enter': "))
     if new_customer_email:
