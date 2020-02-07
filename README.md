@@ -139,6 +139,13 @@ I integrated [Unit Tests](test/test_bank.py) to test my code.
 -----------------
 ### Task 6 
 #### Continuous Delivery.    
+CI (Continuous Integration) was done using **CircleCI**. Test results are downloaded and can be seen 
+in the Artifacts tab for each build-job.
+
+  *All reports are available [here](https://circleci.com/gh/LenXdata/Pet_Project-Virtual_Bank/28#artifacts/containers/0)
+  *Report for all [project files]( https://28-223566043-gh.circle-artifacts.com/0/tests-result/index.html)
+  *Report for the [main project file](https://28-223566043-gh.circle-artifacts.com/0/tests-result/src_bank_py.html)
+
 For Continuous Delivery with [Travis-CI](https://travis-ci.com/LenXdata/Pet_Project-Virtual_Bank) 
 you need only one file [.travis.yml](.travis.yml). 
 
@@ -156,3 +163,9 @@ I have used PyCharm as my IDE. Here are my most favorite shortcuts using Mac QWE
  And many others.
 
 -----------------
+### Task 8 
+#### DSL. 
+I’ve created a DSL that lets users easily work with my bank project by calling into the functions that I have built. 
+The program has a simple but nice console interface and users can work with it by entering commands, without any 
+programming experience.
+
