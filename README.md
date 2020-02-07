@@ -169,3 +169,7 @@ I’ve created a DSL that lets users easily work with my bank project by calling
 The program has a simple but nice console interface and users can work with it by entering commands, without any 
 programming experience.
 
+
+
+I created a domain-specific language that resembles my UML class diagram. My DSL includes entities together with associations and implementation relationships. 
+With my DSL I tried to capture different parts of banking experience. For example, banking is about financial transactions and customer relations. I have combined both parts in my program.
