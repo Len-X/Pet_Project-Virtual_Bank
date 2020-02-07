@@ -209,7 +209,7 @@ This is what we want with a functional programming approach.
 
 2. **Side effect free functions.**  
 A pure function is a function that:
- - is idempotent — returns the same result if provided the same arguments,
+ - is idempotent — returns the same result if provided the same arguments
  - has no side effects (side effect free).
 Here is an example of a pure (side-effect) free function in my code.
     ```python
