@@ -111,7 +111,7 @@ Here are my favorite cheat sheets for clean code: [Cheat Sheet 1](Clean_Code_Che
 -----------------
 ### Task 4
 #### Build Management.  
-I used Gradle and [PyGradle plugin](https://github.com/innobead/pygradle) as Build Management tools.
+I used Gradle and [PyGradle plugin](https://github.com/innobead/pygradle) as Build Management tool.
 
 The plugin allows you to accomplish many tasks with one command:
  - install/build virtualenv
