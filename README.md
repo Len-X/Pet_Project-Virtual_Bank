@@ -171,5 +171,13 @@ programming experience.
 
 
 
-I created a domain-specific language that resembles my UML class diagram. My DSL includes entities together with associations and implementation relationships. 
-With my DSL I tried to capture different parts of banking experience. For example, banking is about financial transactions and customer relations. I have combined both parts in my program.
+I created a domain-specific language that resembles my UML class diagram. My DSL includes entities together with 
+associations and implementation relationships. 
+With my DSL I tried to capture different parts of banking experience. 
+For example, banking is about financial transactions and customer relations. I have combined both parts in my program.
+
+
+So by entering simple commands a user can work with the main menu and move from one part to another. 
+Also, a user has an ability for more complex entries, for example when adding a new bank customer. 
+It is as simple as typing in customers information and confirming it by hitting an “enter”. 
+The program will then display entered records for review.
