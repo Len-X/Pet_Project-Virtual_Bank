@@ -191,7 +191,7 @@ I can make changes to my program and add additional functionalities in the futur
 -----------------
 ### Task 9 
 #### Functional Programming. 
-1. **Final data structures.**
+1. **Final data structures.**  
 Final or persistent data structure is a data structure that always preserves the previous version of itself when it is 
 modified. Such data structures are effectively immutable. Tuple is an immutable data structure in Python. 
 I haven’t used it explicitly in my code, but here is an example of the immutable data structure in functional 
@@ -206,7 +206,8 @@ in an immutable data structure so it can’t be modified in-place.
     ```
 Now, we can access all of our data by index, and we are not in danger of tampering with it. 
 This is what we want with a functional programming approach.
-2. **Side effect free functions.**
+
+2. **Side effect free functions.**  
 A pure function is a function that:
  - is idempotent — returns the same result if provided the same arguments,
  - has no side effects (side effect free).
@@ -220,7 +221,7 @@ Here is an example of a pure (side-effect) free function in my code.
         return None
     return existing_account
     ```
-3. **Higher order functions.**
+3. **Higher order functions.**  
 Higher Order Functions either accept a function as an argument or return a function for further processing.
 I have used some built-in Python functions inside of my functions, such as str() and input().
    ```python
@@ -228,7 +229,7 @@ I have used some built-in Python functions inside of my functions, such as str()
     if new_customer_name:
         existing_customer.name = new_customer_name
    ```
-4. **Function that takes functions as parameters and returns functions as values.**
+4. **Function that takes functions as parameters and returns functions as values.**  
 Here is an example of such a higher order function that does both.
     ```python
    def retry(func):
@@ -242,7 +243,7 @@ Here is an example of such a higher order function that does both.
         raise exc
      return retried_function
     ```
-5. **Use of closures / anonymous functions.**
+5. **Use of closures / anonymous functions.**  
 A **closure** is a way of keeping alive a variable even when the function has returned. 
 So, in a closure, a function is defined along with the environment. In Python, this is done by nesting a function 
 inside the encapsulating function and then returning the underlying function.
@@ -259,7 +260,7 @@ inside the encapsulating function and then returning the underlying function.
     print(closure1(1)) # output 6
     print(closure1(2)) # output 7
     ```
-**Anonymous functions** in Python are created using the lambda statement. 
+**Anonymous functions** in Python are created using the lambda statement.   
 This approach is most commonly used when passing a simple function as an argument to another function. 
 The syntax is shown in the next example and consists of the lambda keyword followed by a list of arguments, a colon, 
 and the expression to evaluate and return.
