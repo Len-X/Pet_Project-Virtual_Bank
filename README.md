@@ -149,7 +149,6 @@ in the Artifacts tab for each build-job.
 For Continuous Delivery with [Travis-CI](https://travis-ci.com/LenXdata/Pet_Project-Virtual_Bank) 
 you need only one file [.travis.yml](.travis.yml). 
 
-
 -----------------
 ### Task 7 
 #### IDE.    
@@ -169,17 +168,24 @@ I’ve created a DSL that lets users easily work with my bank project by calling
 The program has a simple but nice console interface and users can work with it by entering commands, without any 
 programming experience.
 
-
+![](Images/Screenshot1.png)
 
 I created a domain-specific language that resembles my UML class diagram. My DSL includes entities together with 
 associations and implementation relationships. 
 With my DSL I tried to capture different parts of banking experience. 
 For example, banking is about financial transactions and customer relations. I have combined both parts in my program.
 
-
-
+![](Images/Screenshot2.png)
+![](Images/Screenshot3.png)
 
 So by entering simple commands a user can work with the main menu and move from one part to another. 
 Also, a user has an ability for more complex entries, for example when adding a new bank customer. 
 It is as simple as typing in customers information and confirming it by hitting an “enter”. 
 The program will then display entered records for review.
+
+![](Images/Screenshot4.png)
+
+Python is a great language for creating DSLs. Because of it’s dynamic and flexible nature, 
+I can make changes to my program and add additional functionalities in the future.
+
+-----------------
