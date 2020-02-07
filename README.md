@@ -142,9 +142,9 @@ I integrated [Unit Tests](test/test_bank.py) to test my code.
 CI (Continuous Integration) was done using **CircleCI**. Test results are downloaded and can be seen 
 in the Artifacts tab for each build-job.
 
-  *All reports are available [here](https://circleci.com/gh/LenXdata/Pet_Project-Virtual_Bank/28#artifacts/containers/0)
-  *Report for all [project files]( https://28-223566043-gh.circle-artifacts.com/0/tests-result/index.html)
-  *Report for the [main project file](https://28-223566043-gh.circle-artifacts.com/0/tests-result/src_bank_py.html)
+ - All reports are available [here](https://circleci.com/gh/LenXdata/Pet_Project-Virtual_Bank/28#artifacts/containers/0)
+ - Report for all [project files]( https://28-223566043-gh.circle-artifacts.com/0/tests-result/index.html)
+ - Report for the [main project file](https://28-223566043-gh.circle-artifacts.com/0/tests-result/src_bank_py.html)
 
 For Continuous Delivery with [Travis-CI](https://travis-ci.com/LenXdata/Pet_Project-Virtual_Bank) 
 you need only one file [.travis.yml](.travis.yml). 
@@ -189,3 +189,88 @@ Python is a great language for creating DSLs. Because of it’s dynamic and flex
 I can make changes to my program and add additional functionalities in the future.
 
 -----------------
+### Task 9 
+#### Functional Programming. 
+1. **Final data structures.**
+Final or persistent data structure is a data structure that always preserves the previous version of itself when it is 
+modified. Such data structures are effectively immutable. Tuple is an immutable data structure in Python. 
+I haven’t used it explicitly in my code, but here is an example of the immutable data structure in functional 
+programming. 
+We can use .namedtulple() from the collections module, which is built into Python, in order to represent our data 
+in an immutable data structure so it can’t be modified in-place.
+    ```python
+   import collections
+   Student = collections.namedtuple('student', ['name', 'age', 'degree'])
+   students = (Student(name="James Bond", age=45, degree="bachelor"),
+            Student(name="Taylor Swift", age=30, degree="masters"))
+    ```
+Now, we can access all of our data by index, and we are not in danger of tampering with it. 
+This is what we want with a functional programming approach.
+2. **Side effect free functions.**
+A pure function is a function that:
+ - is idempotent — returns the same result if provided the same arguments,
+ - has no side effects (side effect free).
+Here is an example of a pure (side-effect) free function in my code.
+    ```python
+   def get_account(account_num_param):
+    try:
+        existing_account = Account.get(Account.accountNo == account_num_param)
+    except Account.DoesNotExist:
+        print("\nAccount not found")
+        return None
+    return existing_account
+    ```
+3. **Higher order functions.**
+Higher Order Functions either accept a function as an argument or return a function for further processing.
+I have used some built-in Python functions inside of my functions, such as str() and input().
+   ```python
+   new_customer_name = str(input("Please enter customer's new name, otherwise hit 'Enter': "))
+    if new_customer_name:
+        existing_customer.name = new_customer_name
+   ```
+4. **Function that takes functions as parameters and returns functions as values.**
+Here is an example of such a higher order function that does both.
+    ```python
+   def retry(func):
+    def retried_function(*args, **kwargs):
+        exc = None
+        for _ in range(3):
+            try:
+               return func(*args, **kwargs)
+            except Exception as exc:
+               print("Exception raised while calling %s with args:%s, kwargs: %s. Retrying" % (func, args, kwargs))
+        raise exc
+     return retried_function
+    ```
+5. **Use of closures / anonymous functions.**
+A **closure** is a way of keeping alive a variable even when the function has returned. 
+So, in a closure, a function is defined along with the environment. In Python, this is done by nesting a function 
+inside the encapsulating function and then returning the underlying function.
+    ```python
+   def add_5():
+    five = 5
+
+    def add(arg): # nesting functions
+        return arg + five
+    return add
+
+   if __name__ == '__main__':
+    closure1 = add_5()
+    print(closure1(1)) # output 6
+    print(closure1(2)) # output 7
+    ```
+**Anonymous functions** in Python are created using the lambda statement. 
+This approach is most commonly used when passing a simple function as an argument to another function. 
+The syntax is shown in the next example and consists of the lambda keyword followed by a list of arguments, a colon, 
+and the expression to evaluate and return.
+   ```python
+   def anonymous_func(num):
+    return lambda x : x * num
+
+    func_result = anonymous_func(10)
+    print(func_result(9))
+   ```
+
+
+-----------------
+
