@@ -168,7 +168,7 @@ I’ve created a DSL that lets users easily work with my bank project by calling
 The program has a simple but nice console interface and users can work with it by entering commands, without any 
 programming experience.
 
-<img src="Images/Screenshot1.png" width="100">
+<img src="Images/Screenshot1.png" width="800">
 
 I created a domain-specific language that resembles my UML class diagram. My DSL includes entities together with 
 associations and implementation relationships. 
