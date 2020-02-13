@@ -20,6 +20,14 @@
 
 -----------------
 ## Part A
+The main objective of this Pet Project is to get acquainted with some of the Software Engineering concepts. 
+I created a bank system program and applied some tools and instruments to my code.
+
+The name of my project is **“Virtual bank - Lena’s Bank”**. It's a nice console-based bank system written in 
+Python language. The program is linked to MySQL database where all clients, accounts and transaction records are stored. 
+
+This program was designed to be used by users without any programming experience.
+
 The project was writen with Python 3.7.3  
 Database MySQL
 
